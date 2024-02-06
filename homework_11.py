@@ -6,57 +6,57 @@ class Field:
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
     def __str__(self):
-        return str(self.__value)
+        return str(self._value)
 
     def is_valid(self, value):
         return True
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
 
 class Name(Field):
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
     def __str__(self):
-        return str(self.__value)
+        return str(self._value)
 
     def is_valid(self, value):
-        if self.value.isalpha():
+        if value.isalpha():
             return True
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
 
 class Phone(Field):
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
     def __str__(self):
-        return str(self.__value)
+        return str(self._value)
 
     def is_valid(self, value):
         if not value.isdigit() or len(value) != 10:
@@ -65,23 +65,23 @@ class Phone(Field):
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
 
 class Birthday(Field):
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
     def __str__(self):
-        return str(self.__value)
+        return str(self._value)
 
     def is_valid(self, value):
         try:
@@ -92,13 +92,13 @@ class Birthday(Field):
 
     @property
     def value(self):
-        return self.__value
+        return self._value
 
     @value.setter
     def value(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self.__value = value
+        self._value = value
 
 
 class Record:
