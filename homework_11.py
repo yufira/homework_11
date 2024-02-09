@@ -6,82 +6,43 @@ class Field:
     def __init__(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self._value = value
+        self.__value = value
 
     def __str__(self):
-        return str(self._value)
+        return str(self.__value)
 
     def is_valid(self, value):
         return True
 
     @property
     def value(self):
-        return self._value
+        return self.__value
 
     @value.setter
     def value(self, value):
         if not self.is_valid(value):
             raise ValueError("Invalid value")
-        self._value = value
+        self.__value = value
 
 
 class Name(Field):
-    def __init__(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
-
-    def __str__(self):
-        return str(self._value)
 
     def is_valid(self, value):
-        if value.isalpha():
-            return True
-
-    @property
-    def value(self):
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
+        for i in value:
+            if not (i.isalpha() or i.isspace()):
+                return False
+        return True
 
 
 class Phone(Field):
-    def __init__(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
-
-    def __str__(self):
-        return str(self._value)
 
     def is_valid(self, value):
         if not value.isdigit() or len(value) != 10:
             raise ValueError('Invalid phone number format')
         return True
 
-    @property
-    def value(self):
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
-
 
 class Birthday(Field):
-    def __init__(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
-
-    def __str__(self):
-        return str(self._value)
 
     def is_valid(self, value):
         try:
@@ -89,16 +50,6 @@ class Birthday(Field):
             return True
         except ValueError as e:
             raise ValueError(f"Wrong date format: {e}")
-
-    @property
-    def value(self):
-        return self._value
-
-    @value.setter
-    def value(self, value):
-        if not self.is_valid(value):
-            raise ValueError("Invalid value")
-        self._value = value
 
 
 class Record:
@@ -108,16 +59,12 @@ class Record:
         self.phones = []
 
     def add_phone(self, phone):
-        try:
-            new_number = Phone(phone)
-            self.phones.append(new_number)
-        except ValueError as e:
-            print(f'Error adding phone number: {e}')
+        new_number = Phone(phone)
+        self.phones.append(new_number)
 
     def remove_phone(self, phone):
         phones_to_remove = filter(lambda p: p.value == phone, self.phones)
-        for phone in phones_to_remove:
-            self.phones.remove(phone)
+        self.phones.remove(list(phones_to_remove)[0])
 
     def edit_phone(self, old_number, new_number):
         found = False
@@ -184,7 +131,7 @@ class AddressBook(UserDict):
             records_slice = list(
                 self.data.values()
             )[counter:counter + record_number]
-            yield [str(record) for record in records_slice]
+            yield records_slice
             counter += record_number
 
 
